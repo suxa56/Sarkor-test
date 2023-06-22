@@ -2,6 +2,7 @@ package repository
 
 import (
 	Sarkor_test "Sarkor-test"
+	"Sarkor-test/pkg/repository/user"
 	"database/sql"
 )
 
@@ -21,7 +22,7 @@ type Repository struct {
 
 func NewRepository(db *sql.DB) *Repository {
 	return &Repository{
-		Authorization: NewAuthSQLite(db),
-		UserInfo:      NewUserInfoRepo(db),
+		Authorization: user.NewAuthSQLite(db),
+		UserInfo:      user.NewUserInfoRepo(db),
 	}
 }

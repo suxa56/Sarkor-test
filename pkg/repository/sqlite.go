@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	userTable  = "user"
-	phoneTable = "phone"
+	UserTable  = "user"
+	PhoneTable = "phone"
 )
 
 func NewSQLiteDB() (*sql.DB, error) {

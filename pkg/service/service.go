@@ -3,6 +3,7 @@ package service
 import (
 	Sarkor_test "Sarkor-test"
 	"Sarkor-test/pkg/repository"
+	"Sarkor-test/pkg/service/user"
 )
 
 type Authorization interface {
@@ -22,7 +23,7 @@ type Service struct {
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
-		Authorization: NewAuthService(repos.Authorization),
-		UserInfo:      NewUserInfoService(repos.UserInfo),
+		Authorization: user.NewAuthService(repos.Authorization),
+		UserInfo:      user.NewUserInfoService(repos.UserInfo),
 	}
 }

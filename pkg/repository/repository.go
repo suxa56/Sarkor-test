@@ -1,8 +1,12 @@
 package repository
 
-import "database/sql"
+import (
+	Sarkor_test "Sarkor-test"
+	"database/sql"
+)
 
 type Authorization interface {
+	CreateUser(user Sarkor_test.User) (int, error)
 }
 
 type Repository struct {
@@ -10,5 +14,7 @@ type Repository struct {
 }
 
 func NewRepository(db *sql.DB) *Repository {
-	return &Repository{}
+	return &Repository{
+		Authorization: NewAuthSQLite(db),
+	}
 }

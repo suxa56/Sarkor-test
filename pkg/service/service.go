@@ -1,8 +1,12 @@
 package service
 
-import "Sarkor-test/pkg/repository"
+import (
+	Sarkor_test "Sarkor-test"
+	"Sarkor-test/pkg/repository"
+)
 
 type Authorization interface {
+	CreateUser(user Sarkor_test.User) (int, error)
 }
 
 type Service struct {
@@ -10,5 +14,7 @@ type Service struct {
 }
 
 func NewService(repos *repository.Repository) *Service {
-	return &Service{}
+	return &Service{
+		Authorization: NewAuthService(repos.Authorization),
+	}
 }

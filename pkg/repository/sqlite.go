@@ -5,6 +5,11 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+const (
+	userTable  = "user"
+	phoneTable = "phone"
+)
+
 func NewSQLiteDB() (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", "./sarkor.db")
 	if err != nil {

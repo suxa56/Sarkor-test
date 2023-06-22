@@ -2,7 +2,6 @@ package repository
 
 import (
 	Sarkor_test "Sarkor-test"
-	"Sarkor-test/pkg/repository/user"
 	"database/sql"
 )
 
@@ -15,14 +14,20 @@ type UserInfo interface {
 	GetUserInfo(name string) ([]Sarkor_test.UserDto, error)
 }
 
+type PhoneRepo interface {
+	CreatePhone(phone Sarkor_test.Phone) (int, error)
+}
+
 type Repository struct {
 	Authorization
 	UserInfo
+	PhoneRepo
 }
 
 func NewRepository(db *sql.DB) *Repository {
 	return &Repository{
-		Authorization: user.NewAuthSQLite(db),
-		UserInfo:      user.NewUserInfoRepo(db),
+		Authorization: NewAuthSQLite(db),
+		UserInfo:      NewUserInfoRepo(db),
+		PhoneRepo:     NewPhoneRepoImpl(db),
 	}
 }

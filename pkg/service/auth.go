@@ -1,4 +1,4 @@
-package user
+package service
 
 import (
 	Sarkor_test "Sarkor-test"

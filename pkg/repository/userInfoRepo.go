@@ -1,8 +1,7 @@
-package user
+package repository
 
 import (
 	Sarkor_test "Sarkor-test"
-	"Sarkor-test/pkg/repository"
 	"database/sql"
 	"fmt"
 )
@@ -23,7 +22,7 @@ func (u *UserInfoRepo) GetUserInfo(name string) ([]Sarkor_test.UserDto, error) {
 	var result = make([]Sarkor_test.UserDto, 0)
 	// Create query to get id and age from users having NAME
 	query := fmt.Sprintf(
-		"SELECT id, age FROM %s WHERE name=$1", repository.UserTable)
+		"SELECT id, age FROM %s WHERE name=$1", UserTable)
 	// Fill query and execute
 	rows, _ := u.db.Query(query, name)
 

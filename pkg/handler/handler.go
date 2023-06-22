@@ -23,9 +23,9 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		userRoute.POST("/auth", h.auth)
 
 		// Get user info: id, name, age
-		userRoute.GET("/:name", h.getUser)
+		userRoute.GET("/:name", h.getUser, h.userIdentity)
 
-		phoneRoute := userRoute.Group("/phone")
+		phoneRoute := userRoute.Group("/phone", h.userIdentity)
 		{
 			// Add phone
 			phoneRoute.POST("/", h.createPhone)

@@ -14,7 +14,13 @@ func main() {
 		log.Fatalf("error initializing configs: %s", err.Error())
 	}
 
-	repos := repository.NewRepository()
+	db, err := repository.NewSQLiteDB()
+	if err != nil {
+		log.Fatalf("Failed to initialize db: %s", err.Error())
+	}
+	defer repository.CloseDB(db)
+
+	repos := repository.NewRepository(db)
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 	srv := new(Sarkor_test.Server)

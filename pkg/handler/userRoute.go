@@ -52,5 +52,17 @@ func (h *Handler) auth(c *gin.Context) {
 }
 
 func (h *Handler) getUser(c *gin.Context) {
+	_, ok := c.Get(userCtx)
+	if !ok {
+		newErrorResponse(c, http.StatusForbidden, "incorrect id")
+	}
+	name := c.Param("name")
+
+	userInfo, err := h.services.GetUserInfo(name)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+
+	c.JSON(http.StatusOK, userInfo)
 
 }

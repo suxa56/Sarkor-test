@@ -11,12 +11,18 @@ type Authorization interface {
 	ParseToken(accessToken string) (int, error)
 }
 
+type UserInfo interface {
+	GetUserInfo(name string) ([]Sarkor_test.UserDto, error)
+}
+
 type Service struct {
 	Authorization
+	UserInfo
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
+		UserInfo:      NewUserInfoService(repos.UserInfo),
 	}
 }

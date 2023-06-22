@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// Register new user
 func (h *Handler) register(c *gin.Context) {
 	var input Sarkor_test.User
 
@@ -31,6 +32,7 @@ type signInInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+// Auth user
 func (h *Handler) auth(c *gin.Context) {
 	var input signInInput
 
@@ -51,10 +53,11 @@ func (h *Handler) auth(c *gin.Context) {
 
 }
 
+// Get user dto by name
 func (h *Handler) getUser(c *gin.Context) {
-	_, ok := c.Get(userCtx)
-	if !ok {
-		newErrorResponse(c, http.StatusForbidden, "incorrect id")
+	_, err := getUserId(c)
+	if err != nil {
+		return
 	}
 	name := c.Param("name")
 

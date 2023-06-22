@@ -1,6 +1,8 @@
 package handler
 
 import (
+	Sarkor_test "Sarkor-test"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
@@ -11,6 +13,7 @@ const (
 	userCtx    = "userId"
 )
 
+// Add id to context
 func (h *Handler) userIdentity(c *gin.Context) {
 	header := c.GetHeader(authHeader)
 	if header == "" {
@@ -31,4 +34,20 @@ func (h *Handler) userIdentity(c *gin.Context) {
 	}
 
 	c.Set(userCtx, userId)
+}
+
+// Parse context, get id
+func getUserId(c *gin.Context) (int, error) {
+	id, ok := c.Get(userCtx)
+	if !ok {
+		newErrorResponse(c, http.StatusInternalServerError, "id not found")
+		return Sarkor_test.UNDEFINED_ID, errors.New("id not found")
+	}
+
+	idInt, ok := id.(int)
+	if !ok {
+		newErrorResponse(c, http.StatusInternalServerError, "id not is invalid")
+		return Sarkor_test.UNDEFINED_ID, errors.New("id not is invalid")
+	}
+	return idInt, nil
 }

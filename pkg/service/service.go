@@ -7,6 +7,7 @@ import (
 
 type Authorization interface {
 	CreateUser(user Sarkor_test.User) (int, error)
+	GenerateToken(login, password string) (string, error)
 }
 
 type Service struct {

@@ -4,6 +4,7 @@ import (
 	Sarkor_test "Sarkor-test"
 	"database/sql"
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type AuthSQLite struct {
@@ -23,5 +24,21 @@ func (a *AuthSQLite) CreateUser(user Sarkor_test.User) (int, error) {
 	if err := row.Scan(&id); err != nil {
 		return 0, err
 	}
+	return id, nil
+}
+
+func (a *AuthSQLite) GetUser(login, password string) (int, error) {
+	var id int
+	var passHash string
+	query := fmt.Sprintf(
+		"SELECT id, password_hash FROM %s WHERE login=$1", userTable)
+	row := a.db.QueryRow(query, login)
+	if err := row.Scan(&id, &passHash); err != nil {
+		return -1, err
+	}
+	if err := bcrypt.CompareHashAndPassword([]byte(passHash), []byte(password)); err != nil {
+		return 0, err
+	}
+
 	return id, nil
 }

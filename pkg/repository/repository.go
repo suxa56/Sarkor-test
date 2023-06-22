@@ -7,6 +7,7 @@ import (
 
 type Authorization interface {
 	CreateUser(user Sarkor_test.User) (int, error)
+	GetUser(login, password string) (int, error)
 }
 
 type Repository struct {

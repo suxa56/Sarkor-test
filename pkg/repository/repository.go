@@ -17,6 +17,7 @@ type UserInfo interface {
 type PhoneRepo interface {
 	CreatePhone(phone Sarkor_test.Phone) (int, error)
 	GetPhoneInfo(phone string) (Sarkor_test.PhoneDto, error)
+	UpdatePhone(userId int, input Sarkor_test.UpdatePhone) error
 	DeletePhone(phoneId, userId int) error
 }
 

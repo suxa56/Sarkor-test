@@ -60,7 +60,27 @@ func (h *Handler) getPhones(c *gin.Context) {
 	})
 }
 
+// Update phone
 func (h *Handler) editPhone(c *gin.Context) {
+	var input Sarkor_test.UpdatePhone
+
+	id, err := getUserId(c)
+	if err != nil {
+		return
+	}
+
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	err = h.services.EditPhone(id, input)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+
+	c.JSON(http.StatusOK, statusResponse{
+		Status: "ok",
+	})
 
 }
 

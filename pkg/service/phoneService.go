@@ -3,6 +3,7 @@ package service
 import (
 	Sarkor_test "Sarkor-test"
 	"Sarkor-test/pkg/repository"
+	"errors"
 )
 
 type PhoneServiceImpl struct {
@@ -29,6 +30,14 @@ func (p *PhoneServiceImpl) GetPhoneInfo(phone string) (Sarkor_test.PhoneDto, err
 		return phoneDto, err
 	}
 	return phoneDto, nil
+}
+
+// Update phone
+func (p *PhoneServiceImpl) EditPhone(userId int, input Sarkor_test.UpdatePhone) error {
+	if input.Phone == nil && input.IsFax == nil && input.Description == nil {
+		return errors.New("empty body")
+	}
+	return p.repo.UpdatePhone(userId, input)
 }
 
 // Delete phone by phone and user id

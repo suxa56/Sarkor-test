@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"strings"
 )
 
 type PhoneRepoImpl struct {
@@ -58,6 +59,38 @@ func (p *PhoneRepoImpl) GetPhoneInfo(phone string) (Sarkor_test.PhoneDto, error)
 		return Sarkor_test.PhoneDto{}, err
 	}
 	return Sarkor_test.PhoneDto{Id: id, Description: description, IsFax: isFax, UserId: userId}, nil
+}
+
+// Update phone
+func (p *PhoneRepoImpl) UpdatePhone(userId int, input Sarkor_test.UpdatePhone) error {
+	setValues := make([]string, 0)
+	args := make([]interface{}, 0)
+	argId := 1
+
+	if input.Phone != nil {
+		setValues = append(setValues, fmt.Sprintf("phone=$%d", argId))
+		args = append(args, *input.Phone)
+		argId++
+	}
+	if input.Description != nil {
+		setValues = append(setValues, fmt.Sprintf("description=$%d", argId))
+		args = append(args, *input.Description)
+		argId++
+	}
+	if input.IsFax != nil {
+		setValues = append(setValues, fmt.Sprintf("phone=$%d", argId))
+		args = append(args, *input.IsFax)
+		argId++
+	}
+
+	setQuery := strings.Join(setValues, ", ")
+
+	query := fmt.Sprintf(
+		"UPDATE %s SET %s WHERE id=$%d AND userId=$%d", PhoneTable, setQuery, argId, argId+1)
+	args = append(args, &input.Id, userId)
+
+	_, err := p.db.Exec(query, args...)
+	return err
 }
 
 // Delete phone by id, check belonging to user by id

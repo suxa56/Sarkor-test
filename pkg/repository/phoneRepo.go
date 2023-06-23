@@ -59,3 +59,13 @@ func (p *PhoneRepoImpl) GetPhoneInfo(phone string) (Sarkor_test.PhoneDto, error)
 	}
 	return Sarkor_test.PhoneDto{Id: id, Description: description, IsFax: isFax, UserId: userId}, nil
 }
+
+// Delete phone by id, check belonging to user by id
+// Return error
+func (p *PhoneRepoImpl) DeletePhone(phoneId, userId int) error {
+	query := fmt.Sprintf(
+		"DELETE FROM %s WHERE id=$1 AND userId=$2", PhoneTable)
+
+	_, err := p.db.Exec(query, phoneId, userId)
+	return err
+}

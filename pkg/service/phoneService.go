@@ -30,3 +30,8 @@ func (p *PhoneServiceImpl) GetPhoneInfo(phone string) (Sarkor_test.PhoneDto, err
 	}
 	return phoneDto, nil
 }
+
+// Delete phone by phone and user id
+func (p *PhoneServiceImpl) DeletePhone(phoneId, userId int) error {
+	return p.repo.DeletePhone(phoneId, userId)
+}

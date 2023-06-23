@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 // Create new phone
@@ -63,6 +64,25 @@ func (h *Handler) editPhone(c *gin.Context) {
 
 }
 
+// Delete phone, get phone id from url, get user id from context
 func (h *Handler) deletePhone(c *gin.Context) {
+	id, err := getUserId(c)
+	if err != nil {
+		return
+	}
 
+	phoneId := c.Param("phoneId")
+	phoneIdInt, err := strconv.Atoi(phoneId)
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+	}
+
+	err = h.services.DeletePhone(phoneIdInt, id)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+
+	c.JSON(http.StatusOK, statusResponse{
+		Status: "ok",
+	})
 }

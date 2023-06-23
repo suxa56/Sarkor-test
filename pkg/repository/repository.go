@@ -16,6 +16,7 @@ type UserInfo interface {
 
 type PhoneRepo interface {
 	CreatePhone(phone Sarkor_test.Phone) (int, error)
+	GetPhoneInfo(phone string) (Sarkor_test.PhoneDto, error)
 }
 
 type Repository struct {

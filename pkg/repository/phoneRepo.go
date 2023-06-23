@@ -42,3 +42,20 @@ func (p *PhoneRepoImpl) CreatePhone(phone Sarkor_test.Phone) (int, error) {
 	}
 	return id, nil
 }
+
+// Get phone dto (id, description, isFax, user id) by phone
+// Return phone dto, error
+func (p *PhoneRepoImpl) GetPhoneInfo(phone string) (Sarkor_test.PhoneDto, error) {
+	var id int
+	var description string
+	var isFax bool
+	var userId int
+
+	query := fmt.Sprintf(
+		"SELECT id, description, isFax, userId FROM %s WHERE phone=$1", PhoneTable)
+	row := p.db.QueryRow(query, phone)
+	if err := row.Scan(&id, &description, &isFax, &userId); err != nil {
+		return Sarkor_test.PhoneDto{}, err
+	}
+	return Sarkor_test.PhoneDto{Id: id, Description: description, IsFax: isFax, UserId: userId}, nil
+}

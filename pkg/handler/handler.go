@@ -30,7 +30,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			// Add phone
 			phoneRoute.POST("/", h.createPhone)
 			// Get phone
-			//phoneRoute.GET("?q=:phone", h.getPhones)
+			phoneRoute.GET("/", h.getPhones)
 			// Edit phone
 			phoneRoute.PUT("/", h.editPhone)
 			// Delete Phone

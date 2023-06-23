@@ -17,6 +17,7 @@ type UserInfo interface {
 
 type PhoneService interface {
 	CreatePhone(phone Sarkor_test.Phone) (int, error)
+	GetPhoneInfo(phone string) (Sarkor_test.PhoneDto, error)
 }
 
 type Service struct {

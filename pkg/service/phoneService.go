@@ -21,3 +21,12 @@ func (p *PhoneServiceImpl) CreatePhone(phone Sarkor_test.Phone) (int, error) {
 	}
 	return phoneId, nil
 }
+
+// Get phone dto by phone
+func (p *PhoneServiceImpl) GetPhoneInfo(phone string) (Sarkor_test.PhoneDto, error) {
+	phoneDto, err := p.repo.GetPhoneInfo(phone)
+	if err != nil {
+		return phoneDto, err
+	}
+	return phoneDto, nil
+}

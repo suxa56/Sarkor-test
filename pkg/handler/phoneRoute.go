@@ -3,7 +3,6 @@ package handler
 import (
 	Sarkor_test "Sarkor-test"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 	"net/url"
 )
@@ -36,7 +35,6 @@ func (h *Handler) createPhone(c *gin.Context) {
 
 // Get and display phone dto, search by name
 func (h *Handler) getPhones(c *gin.Context) {
-	log.Print("lol")
 	_, err := getUserId(c)
 	if err != nil {
 		return

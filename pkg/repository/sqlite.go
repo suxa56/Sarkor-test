@@ -26,10 +26,6 @@ func NewSQLiteDB() (*sql.DB, error) {
 	return db, nil
 }
 
-func CloseDB(db *sql.DB) {
-	db.Close()
-}
-
 func createSchema(db *sql.DB) {
 	statement, _ := db.Prepare(
 		"CREATE TABLE IF NOT EXISTS user " +
